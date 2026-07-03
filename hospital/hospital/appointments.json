@@ -1,0 +1,22 @@
+[
+    {
+        "appointment_id": "12",
+        "patient_name": "abdul",
+        "doctor_name": "vemu",
+        "specialization": "eye",
+        "appointment_date": "11-12-2005",
+        "appointment_time": "10.00am",
+        "hospital_name": "vasavi",
+        "booking_status": "Cancelled"
+    },
+    {
+        "appointment_id": "22",
+        "patient_name": "komal",
+        "doctor_name": "vemu",
+        "specialization": "eye",
+        "appointment_date": "11-06-2006",
+        "appointment_time": "11.00am",
+        "hospital_name": "vasavi",
+        "booking_status": "Confirmed"
+    }
+]

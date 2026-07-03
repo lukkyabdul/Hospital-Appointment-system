@@ -1,0 +1,122 @@
+import json
+import os
+
+FILE_NAME = "appointments.json"
+
+
+def load_appointments():
+    if os.path.exists(FILE_NAME):
+        with open(FILE_NAME, "r") as file:
+            return json.load(file)
+    return []
+
+
+def save_appointments(data):
+    with open(FILE_NAME, "w") as file:
+        json.dump(data, file, indent=4)
+
+
+def book_appointment():
+    appointments = load_appointments()
+
+    appointment = {
+        "appointment_id": input("Enter Appointment ID: "),
+        "patient_name": input("Enter Patient Name: "),
+        "doctor_name": input("Enter Doctor Name: "),
+        "specialization": input("Enter Specialization: "),
+        "appointment_date": input("Enter Date (YYYY-MM-DD): "),
+        "appointment_time": input("Enter Time: "),
+        "hospital_name": input("Enter Hospital Name: "),
+        "booking_status": "Confirmed"
+    }
+
+    appointments.append(appointment)
+    save_appointments(appointments)
+
+    print("\nAppointment Booked Successfully!\n")
+
+
+def view_appointments():
+    appointments = load_appointments()
+
+    if not appointments:
+        print("\nNo Appointments Found!\n")
+        return
+
+    print("\n===== APPOINTMENTS =====")
+    for appt in appointments:
+        print(f"""
+Appointment ID : {appt['appointment_id']}
+Patient Name   : {appt['patient_name']}
+Doctor Name    : {appt['doctor_name']}
+Specialization : {appt['specialization']}
+Date           : {appt['appointment_date']}
+Time           : {appt['appointment_time']}
+Hospital       : {appt['hospital_name']}
+Status         : {appt['booking_status']}
+-------------------------------------
+""")
+
+
+def search_appointment():
+    appointment_id = input("Enter Appointment ID: ")
+
+    appointments = load_appointments()
+
+    for appt in appointments:
+        if appt["appointment_id"] == appointment_id:
+            print("\nAppointment Found\n")
+            print(appt)
+            return
+
+    print("\nAppointment Not Found!\n")
+
+
+def cancel_appointment():
+    appointment_id = input("Enter Appointment ID to Cancel: ")
+
+    appointments = load_appointments()
+
+    for appt in appointments:
+        if appt["appointment_id"] == appointment_id:
+            appt["booking_status"] = "Cancelled"
+            save_appointments(appointments)
+            print("\nAppointment Cancelled Successfully!\n")
+            return
+
+    print("\nAppointment Not Found!\n")
+
+
+while True:
+    print("""
+======== HOSPITAL APPOINTMENT SYSTEM ========
+
+1. Book Appointment
+2. View Appointments
+3. Search Appointment
+4. Cancel Appointment
+5. Exit
+
+============================================
+""")
+
+    choice = input("Enter Choice: ")
+
+    if choice == "1":
+        book_appointment()
+
+    elif choice == "2":
+        view_appointments()
+
+    elif choice == "3":
+        search_appointment()
+
+    elif choice == "4":
+        cancel_appointment()
+
+    elif choice == "5":
+        print("Thank You!")
+        break
+
+    else:
+        print("Invalid Choice!")
